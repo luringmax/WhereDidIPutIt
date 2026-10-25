@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WhereDidIPutIt</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1><span class="logo">?</span>Where<em>Did</em>I<em>Put</em>It<em class="q">?</em></h1>
+    <div class="topbar-actions">
+      <button id="lang-btn" class="btn ghost" type="button" aria-label="Language">EN</button>
+    </div>
+  </header>
+
+  <button id="add-btn" class="fab" type="button"><span class="plus">+</span><span data-i18n="add">Legg til</span><kbd>N</kbd></button>
+
+  <main>
+    <section class="controls">
+      <input id="search" type="search" data-i18n-placeholder="search" autocomplete="off">
+      <select id="filter-type" aria-label="Type">
+        <option value="all" data-i18n="allTypes">Alle typer</option>
+        <option value="physical" data-i18n="physical">Fysisk</option>
+        <option value="game" data-i18n="game">Spill</option>
+      </select>
+      <select id="filter-cat" aria-label="Category"></select>
+      <select id="filter-game" aria-label="Game"></select>
+      <select id="filter-room" aria-label="Room"></select>
+      <select id="sort" aria-label="Sort">
+        <option value="newest" data-i18n="sortNew">Sorter: nyeste</option>
+        <option value="name" data-i18n="sortName">Sorter: navn</option>
+        <option value="place" data-i18n="sortPlace">Sorter: spill / rom</option>
+        <option value="category" data-i18n="sortCat">Sorter: kategori</option>
+      </select>
+      <div class="view-toggle" role="group">
+        <button id="view-cards" type="button" class="btn ghost active" data-i18n="cards">Kort</button>
+        <button id="view-list" type="button" class="btn ghost" data-i18n="list">Liste</button>
+      </div>
+    </section>
+
+    <p id="count" class="count"></p>
+    <div id="results" class="results cards"></div>
+    <p id="empty" class="empty" hidden data-i18n="empty">Ingen ting funnet.</p>
+  </main>
+
+  <dialog id="dialog">
+    <form id="form" method="dialog">
+      <h2 id="dialog-title"></h2>
+
+      <label><span data-i18n="name">Navn</span>
+        <input id="f-name" required maxlength="80">
+      </label>
+
+      <label><span data-i18n="type">Type</span>
+        <select id="f-type">
+          <option value="physical" data-i18n="physical">Fysisk</option>
+          <option value="game" data-i18n="game">Spill</option>
+        </select>
+      </label>
+
+      <label><span data-i18n="category">Kategori</span>
+        <input id="f-cat" list="cat-list" required maxlength="40">
+        <datalist id="cat-list"></datalist>
+        <datalist id="room-list"></datalist>
+        <datalist id="game-list"></datalist>
+      </label>
+
+      <label><span data-i18n="quantity">Mengde</span>
+        <input id="f-qty" type="number" min="1" max="999999" step="1" value="1" required>
+      </label>
+
+      <label><span data-i18n="description">Beskrivelse (valgfri)</span>
+        <textarea id="f-desc" rows="2" maxlength="300"></textarea>
+      </label>
+
+      <div class="photo">
+        <span data-i18n="photo">Bilde (valgfritt)</span>
+        <input id="f-photo" type="file" accept="image/*">
+        <div class="photo-row">
+          <img id="photo-preview" alt="" hidden>
+          <button type="button" id="photo-remove" class="btn small danger" hidden data-i18n="removePhoto">Fjern bilde</button>
+        </div>
+      </div>
+
+      <fieldset id="fs-physical">
+        <legend data-i18n="location">Plassering</legend>
+        <label><span data-i18n="room">Rom</span><input id="f-room" list="room-list" maxlength="60"></label>
+        <label><span data-i18n="furniture">Møbel</span><input id="f-furniture" maxlength="60"></label>
+        <label><span data-i18n="spot">Detaljert sted</span><input id="f-spot" maxlength="60"></label>
+      </fieldset>
+
+      <fieldset id="fs-game" hidden>
+        <legend data-i18n="location">Plassering</legend>
+        <label><span data-i18n="gameName">Spill</span><input id="f-game" list="game-list" maxlength="60"></label>
+        <label><span data-i18n="account">Kontonavn / kallenavn</span><input id="f-account" maxlength="60"></label>
+        <label><span data-i18n="character">Karakter</span><input id="f-character" maxlength="60"></label>
+        <label><span data-i18n="container">Inventory / stash / stash-tab</span><input id="f-container" maxlength="60"></label>
+      </fieldset>
+
+      <div class="dialog-actions">
+        <button type="button" id="cancel-btn" class="btn ghost" data-i18n="cancel">Avbryt</button>
+        <button type="submit" class="btn primary" title="Ctrl+S / Ctrl+Enter"><span data-i18n="save">Lagre</span></button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="lightbox" class="lightbox">
+    <img id="lightbox-img" alt="">
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
